@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/witch_main-track.wav-b0ccf93d4d3d74d0d696c5ee5300b21a.sample"
+
+[deps]
+
+source_file="res://old/music/witch_main-track.wav"
+dest_files=[ "res://.import/witch_main-track.wav-b0ccf93d4d3d74d0d696c5ee5300b21a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=true
+compress/mode=0

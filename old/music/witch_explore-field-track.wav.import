@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/witch_explore-field-track.wav-9304d26a6e0b8ab021a0f1e8a7457b09.sample"
+
+[deps]
+
+source_file="res://old/music/witch_explore-field-track.wav"
+dest_files=[ "res://.import/witch_explore-field-track.wav-9304d26a6e0b8ab021a0f1e8a7457b09.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=true
+compress/mode=0
