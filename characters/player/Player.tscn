@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://characters/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://characters/player/states/StateMachine.gd" type="Script" id=2]
@@ -30,6 +30,7 @@
 [ext_resource path="res://characters/player/sprites/walkup3.png" type="Texture" id=28]
 [ext_resource path="res://characters/player/sprites/idle2.png" type="Texture" id=29]
 [ext_resource path="res://characters/player/sprites/point_light.png" type="Texture" id=30]
+[ext_resource path="res://shader-tests/palette.tres" type="Material" id=31]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 8.63928
@@ -37,13 +38,8 @@ radius = 8.63928
 [sub_resource type="CircleShape2D" id=2]
 radius = 49.8919
 
-[sub_resource type="SpriteFrames" id=5]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ ExtResource( 10 ) ],
-"loop": true,
-"name": "idleright",
-"speed": 5.0
-}, {
 "frames": [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ],
 "loop": true,
 "name": "walkright",
@@ -78,9 +74,14 @@ animations = [ {
 "loop": true,
 "name": "idleup",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "idleright",
+"speed": 5.0
 } ]
 
-[sub_resource type="ConvexPolygonShape2D" id=6]
+[sub_resource type="ConvexPolygonShape2D" id=4]
 points = PoolVector2Array( 0, -10, 10, 5, 5, 8, 0, 9, -5, 8, -10, 5 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -123,6 +124,7 @@ scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 9 )
 
 [node name="DialogTrigger" type="Area2D" parent="."]
+visible = false
 position = Vector2( 0, -4 )
 
 [node name="DialogTriggerRadius" type="CollisionShape2D" parent="DialogTrigger"]
@@ -130,11 +132,13 @@ shape = SubResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 light_mask = 1024
+material = ExtResource( 31 )
 position = Vector2( 0, -16 )
-frames = SubResource( 5 )
+frames = SubResource( 3 )
 animation = "idleleft"
 
 [node name="AttackAreas" type="Node2D" parent="."]
+visible = false
 
 [node name="LeftAttackArea" type="Area2D" parent="AttackAreas"]
 position = Vector2( 0, 4 )
@@ -143,7 +147,7 @@ scale = Vector2( 1.5, 1.5 )
 [node name="LeftAttackArea" type="CollisionShape2D" parent="AttackAreas/LeftAttackArea"]
 position = Vector2( -5, -5 )
 rotation = 1.5708
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="UpAttackArea" type="Area2D" parent="AttackAreas"]
 position = Vector2( 0, 4 )
@@ -152,7 +156,7 @@ scale = Vector2( 1.5, 1.5 )
 [node name="UpAttackArea" type="CollisionShape2D" parent="AttackAreas/UpAttackArea"]
 position = Vector2( 0, -10 )
 rotation = 3.14159
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="RightAttackArea" type="Area2D" parent="AttackAreas"]
 position = Vector2( 0, 4 )
@@ -161,18 +165,19 @@ scale = Vector2( 1.5, 1.5 )
 [node name="RightAttackArea" type="CollisionShape2D" parent="AttackAreas/RightAttackArea"]
 position = Vector2( 5, -5 )
 rotation = 4.71239
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="DownAttackArea" type="Area2D" parent="AttackAreas"]
 position = Vector2( 0, 4 )
 scale = Vector2( 1.5, 1.5 )
 
 [node name="DownAttackArea" type="CollisionShape2D" parent="AttackAreas/DownAttackArea"]
-shape = SubResource( 6 )
+shape = SubResource( 4 )
 
 [node name="Light2D" type="Light2D" parent="."]
 texture = ExtResource( 30 )
 texture_scale = 2.0
+color = Color( 1, 1, 1, 0.490196 )
 shadow_enabled = true
 shadow_color = Color( 0, 0, 0, 1 )
 shadow_filter = 1
