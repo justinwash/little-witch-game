@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://scenes/Main.gd" type="Script" id=1]
 [ext_resource path="res://tiles/tileset.tres" type="TileSet" id=2]
@@ -16,10 +16,102 @@
 [ext_resource path="res://items/Acorn/Acorn.tscn" type="PackedScene" id=14]
 [ext_resource path="res://items/Leaf/Leaf.tscn" type="PackedScene" id=15]
 [ext_resource path="res://music/witch_explore-field-track.wav" type="AudioStream" id=16]
-[ext_resource path="res://characters/enemies/squirrel/Squirrel.tscn" type="PackedScene" id=17]
+[ext_resource path="res://SmokeMachine.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/NightFilter.gd" type="Script" id=18]
 
+[sub_resource type="ShaderMaterial" id=1]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+// Gonkee's smoke shader for Godot 3 - full tutorial https://youtu.be/ZkeRKXCoJNo
+// If you use this shader, I would prefer it if you gave credit to me and my channel
+
+uniform vec2 center = vec2(0.5, 0.8);
+
+uniform int OCTAVES = 6;
+
+float rand(vec2 coord){
+	return fract(sin(dot(coord, vec2(12.9898, 78.233)))* 43758.5453123);
+}
+
+float noise(vec2 coord){
+	vec2 i = floor(coord);
+	vec2 f = fract(coord);
+
+	// 4 corners of a rectangle surrounding our point
+	float a = rand(i);
+	float b = rand(i + vec2(1.0, 0.0));
+	float c = rand(i + vec2(0.0, 1.0));
+	float d = rand(i + vec2(1.0, 1.0));
+
+	vec2 cubic = f * f * (3.0 - 2.0 * f);
+
+	return mix(a, b, cubic.x) + (c - a) * cubic.y * (1.0 - cubic.x) + (d - b) * cubic.x * cubic.y;
+}
+
+float fbm(vec2 coord){
+	float value = 0.0;
+	float scale = 0.5;
+
+	for(int i = 0; i < OCTAVES; i++){
+		value += noise(coord) * scale;
+		coord *= 2.0;
+		scale *= 0.5;
+	}
+	return value;
+}
+
+float egg_shape(vec2 coord, float radius){
+	vec2 diff = abs(coord - center);
+
+	if (coord.y < center.y){
+		diff.y /= 2.0;
+	} else {
+		diff.y *= 2.0;
+	}
+
+	float dist = sqrt(diff.x * diff.x + diff.y * diff.y) / radius;
+	float value = clamp(1.0 - dist, 0.0, 1.0);
+	return clamp(value * value, 0.0, 1.0);
+}
+
+void fragment() {
+	vec2 scaled_coord = UV * 6.0;
+	
+	float warp = UV.y;
+	float dist_from_center = abs(UV.x - 0.5) * 4.0;
+	if (UV.x > 0.5) {
+		warp = 1.0 - warp;
+	}
+	
+	vec2 warp_vec = vec2(warp, 0.0);
+	float motion_fbm = fbm(scaled_coord + vec2(TIME * 0.4, TIME * 1.3)); // used for distorting the smoke_fbm texture
+	float smoke_fbm = fbm(scaled_coord + vec2(0.0, TIME * 1.0) + motion_fbm + warp_vec * dist_from_center);
+	
+	float egg_s = egg_shape(UV, 0.5);
+	
+	float thres = 0.1;
+	smoke_fbm *= egg_s;
+	smoke_fbm = clamp(smoke_fbm - thres, 0.0, 1.0) / (1.0 - thres);
+	if (smoke_fbm < 0.1) {
+		smoke_fbm *= smoke_fbm/0.1;
+	}
+	smoke_fbm /= egg_s;
+	smoke_fbm = sqrt(smoke_fbm);
+	smoke_fbm = clamp(smoke_fbm, 0.0, 1.0);
+	
+	COLOR = vec4(smoke_fbm);
+//	COLOR = vec4(vec3(egg_s), 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+shader_param/center = Vector2( 0.5, 0.8 )
+shader_param/OCTAVES = 6
+
 [node name="Main" type="Node2D"]
+material = SubResource( 1 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 1946.83 ],
@@ -85,11 +177,22 @@ limit_right = 963
 limit_bottom = 1944
 editor_draw_limits = true
 
+[node name="Control" type="Control" parent="Player/Camera2D"]
+show_behind_parent = true
+material = SubResource( 3 )
+use_parent_material = true
+margin_left = -261.0
+margin_top = -193.0
+margin_right = 261.0
+margin_bottom = 121.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Witch Cabin" parent="." instance=ExtResource( 11 )]
 position = Vector2( 499.505, 820.639 )
 
 [node name="Trees" type="Node2D" parent="."]
-editor/display_folded = true
 position = Vector2( 0, 2.28882e-05 )
 
 [node name="Tree" parent="Trees" instance=ExtResource( 12 )]
@@ -270,7 +373,6 @@ position = Vector2( 742.194, 446.779 )
 position = Vector2( 779.206, 594.83 )
 
 [node name="Items" type="Node2D" parent="."]
-editor/display_folded = true
 position = Vector2( 1.52588e-05, 0 )
 
 [node name="Mushroom" parent="Items" groups=[
@@ -337,74 +439,17 @@ stream = ExtResource( 16 )
 autoplay = true
 stream_paused = true
 
-[node name="Enemies" type="Node2D" parent="."]
-
-[node name="Squirrel" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 315.704, 1771.03 )
-max_tree_distance = 600.0
-node_removal_distance = 16.0
-
-[node name="Squirrel2" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 453.207, 1771.03 )
-max_tree_distance = 600.0
-node_removal_distance = 16.0
-
-[node name="Squirrel3" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 316.932, 1876.61 )
-max_tree_distance = 600.0
-node_removal_distance = 16.0
-
-[node name="Squirrel4" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 451.979, 1875.39 )
-roam_timeout = 30.0
-max_tree_distance = 600.0
-node_removal_distance = 16.0
-
-[node name="Squirrel5" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 785.021, 935.781 )
-max_tree_distance = 600.0
-node_removal_distance = 16.0
-
-[node name="Squirrel6" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 922.525, 935.781 )
-max_tree_distance = 600.0
-node_removal_distance = 16.0
-
-[node name="Squirrel7" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 921.297, 1040.14 )
-roam_timeout = 30.0
-max_tree_distance = 600.0
-node_removal_distance = 16.0
-
-[node name="Squirrel8" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 786.249, 1041.36 )
-max_tree_distance = 600.0
-node_removal_distance = 16.0
-
-[node name="Squirrel9" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 182.258, 470.021 )
-max_tree_distance = 1200.0
-node_removal_distance = 16.0
-
-[node name="Squirrel10" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 181.03, 364.438 )
-max_tree_distance = 1200.0
-node_removal_distance = 16.0
-
-[node name="Squirrel11" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 318.534, 364.438 )
-max_tree_distance = 1200.0
-node_removal_distance = 16.0
-
-[node name="Squirrel12" parent="Enemies" instance=ExtResource( 17 )]
-position = Vector2( 317.306, 468.793 )
-roam_timeout = 30.0
-max_tree_distance = 1200.0
-node_removal_distance = 16.0
-
 [node name="NightFilter" type="ColorRect" parent="."]
 visible = false
 margin_right = 976.0
 margin_bottom = 1979.0
 color = Color( 0, 0, 0, 0.470588 )
 script = ExtResource( 18 )
+
+[node name="TextureRect" parent="." instance=ExtResource( 17 )]
+light_mask = 1024
+margin_left = -3315.0
+margin_top = -2423.0
+margin_right = 3748.0
+margin_bottom = 3257.0
+mouse_filter = 2

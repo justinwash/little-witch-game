@@ -23,6 +23,8 @@ var collision_shape
 
 var roam_path = []
 
+onready var trees = get_tree().get_nodes_in_group("Tree")
+
 func _init():
 	self.aggressive = false
 	self.health = 5
@@ -68,10 +70,8 @@ func roam():
 	var end_pos = current_tree.position
 
 	if not roam_path || roam_path.size() == 0:
-		print("roam_path was empty, trying to find path")
 		roam_path = nav_2d.get_simple_path(start_pos, end_pos)
 		if roam_path.size() == 0:
-			print("failed to find path, selecting new target tree")
 			current_tree = select_tree()
 	else:
 		var distance_to_current_node = self.position.distance_to(roam_path[0])
@@ -86,29 +86,18 @@ func dist_to_current_tree():
 		return self.position.distance_to(current_tree.position)
 
 func select_tree():
-	var trees = get_tree().get_nodes_in_group("Tree")
 	rng.randomize()
 	return trees[rng.randi() % trees.size()]
-	# var distance = self.position.distance_to(pick.position)
-	# while distance > max_tree_distance:
-	# 	pick = trees[rng.randi() % trees.size()]
-	# 	distance = self.position.distance_to(pick.position)
-	# 	print("pick was %f away" % distance)
-	# return pick
 
 
 func set_health(hp):
 	.set_health(hp)
-	print("setting health in Squirrel.gd")
 
 func damage(amount):
 	.damage(amount)
 	self.health -= amount
 	self.fleeing = true
 	self.flee_timer = 5.0
-
-func kill():
-	print("kill from Squirrel.gd")
 
 func get_direction_away_from_player():
 	return (self.position - player.position).normalized()

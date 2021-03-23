@@ -24,6 +24,9 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="InventoryPanel" type="Panel" parent="."]
 margin_right = 512.0
@@ -35,13 +38,11 @@ margin_right = 512.0
 margin_bottom = 560.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="InventoryPanel/VSplitContainer"]
-editor/display_folded = true
 margin_right = 512.0
 margin_bottom = 32.0
 rect_min_size = Vector2( 512, 32 )
 
 [node name="HBoxContainer" type="HSplitContainer" parent="InventoryPanel/VSplitContainer/HBoxContainer"]
-editor/display_folded = true
 margin_right = 512.0
 margin_bottom = 32.0
 size_flags_horizontal = 3
@@ -70,7 +71,6 @@ margin_right = 512.0
 margin_bottom = 560.0
 
 [node name="MoneyPanel" type="Panel" parent="."]
-editor/display_folded = true
 margin_top = 560.0
 margin_right = 512.0
 margin_bottom = 600.0
@@ -105,7 +105,6 @@ align = 1
 valign = 1
 
 [node name="InstructionPanel" type="Panel" parent="."]
-editor/display_folded = true
 margin_left = 790.0
 margin_top = 450.0
 margin_right = 1024.0
@@ -125,7 +124,6 @@ TAB: Exit menu
 Hover over Items in Recipe List to View Name"
 
 [node name="RecipePanel" type="Panel" parent="."]
-editor/display_folded = true
 margin_left = 550.0
 margin_right = 1024.0
 margin_bottom = 190.0
@@ -171,7 +169,6 @@ margin_right = 474.0
 margin_bottom = 4.0
 
 [node name="PotionOfMinorStomachAches" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 462.0
@@ -218,7 +215,6 @@ margin_right = 462.0
 margin_bottom = 12.0
 
 [node name="CrunchyNaturePotion" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 462.0
@@ -265,7 +261,6 @@ margin_right = 462.0
 margin_bottom = 12.0
 
 [node name="GreaterPotionOfMinorNarcolepsy" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 462.0
@@ -380,7 +375,6 @@ margin_right = 462.0
 margin_bottom = 12.0
 
 [node name="TastyHealthPotion" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 462.0
@@ -427,7 +421,6 @@ margin_right = 462.0
 margin_bottom = 12.0
 
 [node name="PotionOfAdvancedRevelry" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 462.0
@@ -485,7 +478,6 @@ margin_right = 462.0
 margin_bottom = 12.0
 
 [node name="ScalyPotionOfEnhancedNausea" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 462.0
@@ -543,7 +535,6 @@ margin_right = 462.0
 margin_bottom = 12.0
 
 [node name="PotionOfToadspeak" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 462.0
@@ -590,7 +581,6 @@ margin_right = 462.0
 margin_bottom = 12.0
 
 [node name="PotionOfDelusionaryToadform" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 462.0
@@ -644,7 +634,6 @@ margin_right = 462.0
 margin_bottom = 12.0
 
 [node name="PotionOfLifelongAnxiety" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 462.0
@@ -698,7 +687,6 @@ margin_right = 474.0
 margin_bottom = 12.0
 
 [node name="NightmareFuelConcoction" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 474.0
@@ -745,7 +733,6 @@ margin_right = 474.0
 margin_bottom = 12.0
 
 [node name="PotionOfNeversleep" type="HBoxContainer" parent="RecipePanel/ScrollContainer/RecipeList"]
-editor/display_folded = true
 visible = false
 margin_top = 8.0
 margin_right = 474.0
