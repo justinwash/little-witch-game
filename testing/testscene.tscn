@@ -1,13 +1,17 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://testing/player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://testing/timecontroller.gd" type="Script" id=2]
+[ext_resource path="res://testing/calendar/calendar.gd" type="Script" id=2]
 [ext_resource path="res://testing/debug/player_state.gd" type="Script" id=3]
 [ext_resource path="res://testing/debug/time_state.gd" type="Script" id=4]
 [ext_resource path="res://testing/interactable/lantern.tscn" type="PackedScene" id=5]
-[ext_resource path="res://testing/quests/Quest.gd" type="Script" id=6]
-[ext_resource path="res://testing/quests/Task.gd" type="Script" id=7]
-[ext_resource path="res://testing/quests/QuestController.gd" type="Script" id=8]
+[ext_resource path="res://testing/calendar/days/1/1.gd" type="Script" id=6]
+[ext_resource path="res://testing/calendar/days/1/events/arrival.gd" type="Script" id=7]
+[ext_resource path="res://testing/calendar/days/1/quests/love_potion.gd" type="Script" id=8]
+[ext_resource path="res://testing/calendar/days/1/news/first_day.gd" type="Script" id=9]
+[ext_resource path="res://testing/debug/day_state.gd" type="Script" id=10]
+[ext_resource path="res://testing/debug/quest_state.gd" type="Script" id=11]
+[ext_resource path="res://testing/debug/event_state.gd" type="Script" id=12]
 
 [node name="TestScene" type="Node2D"]
 
@@ -22,18 +26,98 @@ __meta__ = {
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 515.771, 295.478 )
 
-[node name="TimeController" type="Node2D" parent="."]
+[node name="Calendar" type="Node2D" parent="."]
 script = ExtResource( 2 )
 TIME = "DAY"
 TWEEN = NodePath("../Tween")
 
-[node name="NightOverlay" type="ColorRect" parent="TimeController"]
+[node name="NightOverlay" type="ColorRect" parent="Calendar"]
 margin_right = 1024.0
 margin_bottom = 600.0
 color = Color( 0, 0, 0, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Days" type="Node" parent="Calendar"]
+
+[node name="1" type="Node" parent="Calendar/Days"]
+script = ExtResource( 6 )
+
+[node name="Events" type="Node" parent="Calendar/Days/1"]
+
+[node name="Arrival" type="Node" parent="Calendar/Days/1/Events"]
+script = ExtResource( 7 )
+
+[node name="Quests" type="Node" parent="Calendar/Days/1"]
+
+[node name="LovePotionQuest" type="Node" parent="Calendar/Days/1/Quests"]
+script = ExtResource( 8 )
+
+[node name="News" type="Node" parent="Calendar/Days/1"]
+
+[node name="FirstDay" type="Node" parent="Calendar/Days/1/News"]
+script = ExtResource( 9 )
+
+[node name="2" type="Node" parent="Calendar/Days"]
+
+[node name="3" type="Node" parent="Calendar/Days"]
+
+[node name="4" type="Node" parent="Calendar/Days"]
+
+[node name="5" type="Node" parent="Calendar/Days"]
+
+[node name="6" type="Node" parent="Calendar/Days"]
+
+[node name="7" type="Node" parent="Calendar/Days"]
+
+[node name="8" type="Node" parent="Calendar/Days"]
+
+[node name="9" type="Node" parent="Calendar/Days"]
+
+[node name="10" type="Node" parent="Calendar/Days"]
+
+[node name="11" type="Node" parent="Calendar/Days"]
+
+[node name="12" type="Node" parent="Calendar/Days"]
+
+[node name="13" type="Node" parent="Calendar/Days"]
+
+[node name="14" type="Node" parent="Calendar/Days"]
+
+[node name="15" type="Node" parent="Calendar/Days"]
+
+[node name="16" type="Node" parent="Calendar/Days"]
+
+[node name="17" type="Node" parent="Calendar/Days"]
+
+[node name="18" type="Node" parent="Calendar/Days"]
+
+[node name="19" type="Node" parent="Calendar/Days"]
+
+[node name="20" type="Node" parent="Calendar/Days"]
+
+[node name="21" type="Node" parent="Calendar/Days"]
+
+[node name="22" type="Node" parent="Calendar/Days"]
+
+[node name="23" type="Node" parent="Calendar/Days"]
+
+[node name="24" type="Node" parent="Calendar/Days"]
+
+[node name="25" type="Node" parent="Calendar/Days"]
+
+[node name="26" type="Node" parent="Calendar/Days"]
+
+[node name="27" type="Node" parent="Calendar/Days"]
+
+[node name="28" type="Node" parent="Calendar/Days"]
+
+[node name="29" type="Node" parent="Calendar/Days"]
+
+[node name="30" type="Node" parent="Calendar/Days"]
+
+[node name="31" type="Node" parent="Calendar/Days"]
 
 [node name="Control" type="Control" parent="."]
 margin_left = 2.0
@@ -63,27 +147,48 @@ margin_right = 182.0
 margin_bottom = 42.0
 text = "time state:"
 script = ExtResource( 4 )
-TIME_CONTROLLER = NodePath("../../TimeController")
+TIME_CONTROLLER = NodePath("../../Calendar")
+
+[node name="DayState" type="Label" parent="Control"]
+margin_left = 6.0
+margin_top = 38.0
+margin_right = 182.0
+margin_bottom = 58.0
+text = "current day:"
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+CALENDAR = NodePath("../../Calendar")
+
+[node name="QuestState" type="Label" parent="Control"]
+margin_left = 6.0
+margin_top = 86.0
+margin_right = 182.0
+margin_bottom = 150.0
+text = "today's quests:"
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+CALENDAR = NodePath("../../Calendar")
+
+[node name="EventState" type="Label" parent="Control"]
+margin_left = 6.0
+margin_top = 190.0
+margin_right = 182.0
+margin_bottom = 254.0
+text = "today's events:"
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+CALENDAR = NodePath("../../Calendar")
 
 [node name="Interactables" type="Node2D" parent="."]
 
 [node name="Lantern" parent="Interactables" instance=ExtResource( 5 )]
-position = Vector2( 360, 272 )
-TIME_CONTROLLER = NodePath("../../TimeController")
-
-[node name="Quests" type="Node" parent="."]
-script = ExtResource( 8 )
-
-[node name="Quest1" type="Node" parent="Quests"]
-script = ExtResource( 6 )
-
-[node name="Task1" type="Node" parent="Quests/Quest1"]
-script = ExtResource( 7 )
-
-[node name="Task2" type="Node" parent="Quests/Quest1"]
-script = ExtResource( 7 )
-
-[node name="Task3" type="Node" parent="Quests/Quest1"]
-script = ExtResource( 7 )
+position = Vector2( 832, 128 )
+TIME_CONTROLLER = NodePath("../../Calendar")
 
 [node name="Tween" type="Tween" parent="."]
