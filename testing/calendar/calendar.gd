@@ -13,6 +13,9 @@ func _ready():
 	set_daytime()
 	current_day.day_start()
 	
+func next_day():
+	current_day = days.get_node(str(int(current_day.name) + 1))
+	
 func set_daytime():
 	TIME = "DAY"
 	tween.interpolate_property(night_overlay, "color",

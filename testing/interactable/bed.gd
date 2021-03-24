@@ -4,5 +4,7 @@ export(NodePath) var CALENDAR
 onready var calendar = get_node(CALENDAR)
 
 func interact():
-	calendar.set_nighttime()
+	if calendar.TIME == "NIGHT":
+		calendar.next_day()
+		calendar.set_daytime()
 	
