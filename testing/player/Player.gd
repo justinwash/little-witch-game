@@ -12,3 +12,11 @@ var move_dir = {
 enum Directions { UP, DOWN, LEFT, RIGHT }
 var facing_dir
 
+var can_interact = true
+
+func set_can_interact(event):
+	if event == "ignore_interactables":
+		can_interact = false
+	else:
+		can_interact = true
+

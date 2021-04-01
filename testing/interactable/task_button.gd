@@ -8,6 +8,8 @@ onready var calendar = get_node(CALENDAR)
 onready var quest = get_node(QUEST)
 
 func interact():
-	if quest:
+	if quest and quest.active:
 		quest.complete_task(TASK_NAME)
+	else:
+		print("Quest not active: ", quest.name)
 		

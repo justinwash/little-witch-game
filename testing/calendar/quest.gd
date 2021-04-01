@@ -2,6 +2,7 @@ extends Node
 
 var tasks = {}
 
+var active = false
 var complete = false
 
 func complete_task(task_name):

@@ -11,5 +11,5 @@ func update(player, delta):
 	Input.is_action_pressed("ui_down"):
 		emit_signal("change_state", "walk")
 	
-	if Input.is_action_just_pressed("player_interact"):
+	if Input.is_action_just_pressed("player_interact") && player.can_interact:
 		emit_signal("change_state", "interact")

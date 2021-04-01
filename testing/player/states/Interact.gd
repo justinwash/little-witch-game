@@ -11,7 +11,7 @@ func enter(player):
 	emit_signal("change_state", "idle")
 
 func getNearestInteractable(player):
-	var interactables = get_tree().get_nodes_in_group("Interactable")
+	var interactables = get_tree().get_nodes_in_group("interactable")
 	var distances = []
 	for interactable in interactables:
 		if interactable:

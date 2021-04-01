@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://testing/npcs/drew/drew.gd" type="Script" id=1]
+[ext_resource path="res://testing/npcs/drew/sprite/idle.png" type="Texture" id=2]
+
+[node name="Drew" type="Node2D" groups=[
+"interactable",
+"npc",
+]]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.145828, 0.23214 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="NameLabel" type="Label" parent="."]
+margin_left = -17.4821
+margin_top = -30.9911
+margin_right = 22.5179
+margin_bottom = -16.9911
+text = "Drew"
+__meta__ = {
+"_edit_use_anchors_": false
+}
