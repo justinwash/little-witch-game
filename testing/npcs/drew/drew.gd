@@ -13,5 +13,5 @@ onready var player = get_node(PLAYER)
 
 func interact():
 	var new_dialog = Dialogic.start('DrewDay1')
-	new_dialog.connect("dialogic_signal", player, "set_can_interact")
+	new_dialog.connect("dialogic_signal", player, "recieve_dialog_signal")
 	dialog_overlay.add_child(new_dialog)

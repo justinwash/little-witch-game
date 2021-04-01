@@ -5,10 +5,10 @@ func enter(player):
 	.enter(player)
 
 func update(player, delta):
-	if Input.is_action_pressed("ui_right") || \
+	if (Input.is_action_pressed("ui_right") || \
 	Input.is_action_pressed("ui_left") || \
 	Input.is_action_pressed("ui_up") || \
-	Input.is_action_pressed("ui_down"):
+	Input.is_action_pressed("ui_down")) && player.can_move:
 		emit_signal("change_state", "walk")
 	
 	if Input.is_action_just_pressed("player_interact") && player.can_interact:

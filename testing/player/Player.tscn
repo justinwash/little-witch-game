@@ -101,3 +101,6 @@ script = ExtResource( 2 )
 
 [node name="Interact" type="Node" parent="StateMachine"]
 script = ExtResource( 5 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
