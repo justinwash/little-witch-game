@@ -7,7 +7,7 @@
 [ext_resource path="res://testing/interactable/lantern.tscn" type="PackedScene" id=5]
 [ext_resource path="res://testing/calendar/days/1/1.gd" type="Script" id=6]
 [ext_resource path="res://testing/calendar/days/1/events/arrival.gd" type="Script" id=7]
-[ext_resource path="res://testing/calendar/days/1/quests/love_potion.gd" type="Script" id=8]
+[ext_resource path="res://testing/calendar/days/1/quests/love_potion_day_1.gd" type="Script" id=8]
 [ext_resource path="res://testing/calendar/days/1/news/first_day.gd" type="Script" id=9]
 [ext_resource path="res://testing/debug/day_state.gd" type="Script" id=10]
 [ext_resource path="res://testing/debug/quest_state.gd" type="Script" id=11]
@@ -15,7 +15,7 @@
 [ext_resource path="res://testing/interactable/bed.tscn" type="PackedScene" id=13]
 [ext_resource path="res://testing/calendar/days/2/2.gd" type="Script" id=14]
 [ext_resource path="res://testing/interactable/task_button.tscn" type="PackedScene" id=15]
-[ext_resource path="res://testing/calendar/days/2/quests/another_quest.gd" type="Script" id=16]
+[ext_resource path="res://testing/calendar/days/2/quests/love_potion_day_2.gd" type="Script" id=16]
 [ext_resource path="res://testing/calendar/days/2/events/another_event.gd" type="Script" id=17]
 
 [node name="TestScene" type="Node2D"]
@@ -74,7 +74,7 @@ script = ExtResource( 17 )
 
 [node name="Quests" type="Node" parent="Calendar/Days/2"]
 
-[node name="AnotherQuest" type="Node" parent="Calendar/Days/2/Quests"]
+[node name="LovePotionQuest" type="Node" parent="Calendar/Days/2/Quests"]
 script = ExtResource( 16 )
 
 [node name="News" type="Node" parent="Calendar/Days/2"]
@@ -161,12 +161,12 @@ CALENDAR = NodePath("../../Calendar")
 position = Vector2( 538, 135 )
 CALENDAR = NodePath("../../Calendar")
 QUEST = NodePath("../../Calendar/Days/1/Quests/LovePotionQuest")
-TASK_NAME = "task 1"
+TASK_NAME = "day 1, task 1"
 
 [node name="Task Button2" parent="Interactables" instance=ExtResource( 15 )]
 position = Vector2( 366, 160 )
 CALENDAR = NodePath("../../Calendar")
 QUEST = NodePath("../../Calendar/Days/1/Quests/LovePotionQuest")
-TASK_NAME = "task 2"
+TASK_NAME = "day 1, task 2"
 
 [node name="Tween" type="Tween" parent="."]
